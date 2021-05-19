@@ -7,7 +7,6 @@ Estudar o desempenho dos alunos em matemática de acordo com o uso de tecnologia
 - Avaliar AFAZERES_DOM tendo em vista a variável SEXO, de acordo com a REGIAO e o USO_TEMPO_TELAS.
 
 ## **Arquivos:**
-Os *scripts* utilizados em cada atividade estão organizados de acordo com a tabela a seguir:
 
 | ARQUIVO        | DESCRIÇÃO |
 |----------------|-----------|
