@@ -13,7 +13,7 @@ Os *scripts* utilizados em cada atividade estão organizados de acordo com a tab
 |----------------|-----------|
 |`arquivo.R`     | arquivo   |
 
-## **AUTORES:** 
+## **Autores:** 
 
 - João R. K. Santana; 
 - Rayssa L. C. Souza; 
