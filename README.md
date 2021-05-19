@@ -1,6 +1,5 @@
 # Resultados do SAEB (ANEB - Prova Brasil) 2017
 > **ANÁLISE DE DADOS**: O impacto do uso de tecnologias e dos afazeres domésticos em estudantes do Ensino Fundamental brasileiro.
-> **Autores**: João R. K. Santana; Rayssa L. C. Souza; Tailine J. S. Nonato.
 
 ## **Breve descrição do tema:**
 Estudar o desempenho dos alunos em matemática de acordo com o uso de tecnologias e estudar sobre a distribuição de afazeres domésticos buscando entender o efeito do sexo do estudante. Tendo como objetivos específicos:
@@ -13,6 +12,12 @@ Os *scripts* utilizados em cada atividade estão organizados de acordo com a tab
 | ARQUIVO        | DESCRIÇÃO |
 |----------------|-----------|
 |`arquivo.R`     | arquivo   |
+
+## **AUTORES:** 
+
+- João R. K. Santana; 
+- Rayssa L. C. Souza; 
+- Tailine J. S. Nonato.
 
 ## **Links úteis:**
 
