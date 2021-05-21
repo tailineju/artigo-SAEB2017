@@ -33,10 +33,10 @@ tempotela <- amostra %>%
   )
 tempotela
 
-AE <- amostra %>% 
+A <- amostra %>% 
   filter(!is.na(COMPUTADOR)) %>%
   filter(!is.na(NOTA_MT)) %>%
-  filter(COMPUTADOR=='A'|COMPUTADOR=='E') %>%
+  filter(COMPUTADOR=='A') %>%
   select(NOTA_MT) 
 B <- amostra %>% 
   filter(!is.na(COMPUTADOR)) %>%
@@ -48,21 +48,21 @@ C <- amostra %>%
   filter(!is.na(NOTA_MT)) %>%
   filter(COMPUTADOR=='C') %>%
   select(NOTA_MT) 
-D <- amostra %>% 
+DE <- amostra %>% 
   filter(!is.na(COMPUTADOR)) %>%
   filter(!is.na(NOTA_MT)) %>%
-  filter(COMPUTADOR=='D') %>%
+  filter(COMPUTADOR=='D'|COMPUTADOR=='E') %>%
   select(NOTA_MT) 
 
 
 ############ mediana
 
-mediana<-median(c(AE$NOTA_MT,B$NOTA_MT,C$NOTA_MT,D$NOTA_MT)) #mediana geral
-ae<-c(sum(AE$NOTA_MT>mediana),sum(AE$NOTA_MT<=mediana))
+mediana<-median(c(A$NOTA_MT,B$NOTA_MT,C$NOTA_MT,D$NOTA_MT,E$NOTA_MT)) #mediana geral
+a<-c(sum(A$NOTA_MT>mediana),sum(A$NOTA_MT<=mediana))
 b<-c(sum(B$NOTA_MT>mediana),sum(B$NOTA_MT<=mediana))
 c<-c(sum(C$NOTA_MT>mediana),sum(C$NOTA_MT<=mediana))
-d<-c(sum(D$NOTA_MT>mediana),sum(D$NOTA_MT<=mediana))
-dados<-as.table(cbind(ae,b,c,d))
+de<-c(sum(DE$NOTA_MT>mediana),sum(DE$NOTA_MT<=mediana))
+dados<-as.table(cbind(a,b,c,d,e))
 chisq.test(dados)
 
 ######## dataset filtrado
@@ -77,16 +77,21 @@ kruskal.test(computador_Todos$NOTA_MT, computador_Todos$COMPUTADOR)
 
 
 
-computador_Todos$COMPUTADOR %<>%
-  str_replace_all("^A$", "AE") %>%
-  str_replace_all("^E$", "AE")
+computador_Todos$COMPUTADOR  %<>%
+  str_replace("^A$", "Não tem")%>% 
+  str_replace("^B$", "Sim, um")%>% 
+  str_replace("^C$", "Sim, dois")%>% 
+  str_replace("^D$", "Sim, três ou mais")%>% 
+  str_replace("^E$", "Sim, três ou mais")
 
+ordem_comp <- c("Não tem","Sim, um","Sim, dois","Sim, três ou mais")
 
-ggplot(computador_Todos, aes(x=COMPUTADOR, y=NOTA_MT)) +
-  geom_boxplot(fill=c("#A11D21"), width = 0.5) +
-  stat_summary(fun.y="mean", geom="point", shape=23, size=3, fill="white")+
-  labs(x="Disponibilidade de Computador", y="Nota de Matem�tica") +
-  theme_bw()
+ggplot(computador_Todos, aes(x=factor(COMPUTADOR,levels = ordem_comp), y=NOTA_MT)) +
+  geom_boxplot(fill=c("#7AA3CC"), width = 0.5) +
+  stat_summary(fun="mean", geom="point", shape=23, size=3, fill="white")+
+  labs(x="Disponibilidade de Computador", y="Nota de Matemática") +
+  theme.t()+
+  ggsave("imagens/mt-comp.png", width = 158, height = 93, units = "mm")
 
 # testando normalidade para
 shapiro.test(computador_Todos$NOTA_MT)
@@ -94,7 +99,7 @@ shapiro.test(c(AE$NOTA_MT,B$NOTA_MT,C$NOTA_MT,D$NOTA_MT))
 ad.test(c(AE$NOTA_MT,B$NOTA_MT,C$NOTA_MT,D$NOTA_MT))
 ad.test(computador_Todos$NOTA_MT)
 
-#teste de vari�ncia
+#teste de vari?ncia
 #### NOTA_LP e COMPUTADOR
 LeveneTest(computador_Todos$NOTA_MT, computador_Todos$COMPUTADOR, center = mean)
 LeveneTest(computador_Todos$NOTA_MT, computador_Todos$COMPUTADOR, center = median)
