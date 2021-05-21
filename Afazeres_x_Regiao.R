@@ -1,6 +1,7 @@
 library(tidyverse)
 #library(sqldf)
 library(dplyr)
+library(RColorBrewer)
 
 set.seed(123)
 df <- read_csv(
@@ -27,6 +28,7 @@ amostra$REGIAO <- amostra$REGIAO%>%
   str_replace("3", "Sudeste")%>%
   str_replace("4", "Sul")%>%
   str_replace("5", "Centro-Oeste")
+
 
 
 amostra <- amostra %>% 
@@ -85,21 +87,27 @@ dimnames(M) <- list(afazeres = c("A","B", "C","D","E"),
 M
 (R<-chisq.test(M))
 
-# tabela de contingência dos valores esperados
+# tabela de conting?ncia dos valores esperados
 ME = rbind(R$expected, 
            total=apply(R$expected,2,sum))
 ME
 
-# conclusão que não há independência entre afazeres domésticos e regiões
-# há uma associação entre afazeres domésticos e região
+# conclus?o que n?o h? independ?ncia entre afazeres dom?sticos e regi?es
+# h? uma associa??o entre afazeres dom?sticos e regi?o
 
 regioes <- rbind(A, B, C, D, E)
+
+regioes$AFAZERES_DOM <- regioes$AFAZERES_DOM%>%
+  str_replace("^A$", "Menos de 1 hora")%>%
+  str_replace("^B$", "Entre 1 e 2 horas")%>%
+  str_replace("^C$", "Mais de 2 horas")%>%
+  str_replace("^D$", "Mais de 3 horas")%>%
+  str_replace("^E$", "NÃ£o faz")
   
 ggplot(data=regioes,aes(x=AFAZERES_DOM, y=Fi,fill=REGIAO)) + 
-  geom_bar(
-    stat="identity",position="stack"
-#    position="dodge"
-  )+
-  labs(x="Afazeres domésticos por região", y="") +
-  theme_bw()
+  geom_bar(stat="identity",position="stack")+
+  labs(x="Tempo gasto em afazeres domÃ©sticos", y="FrequÃªncia relativa")+
+  scale_fill_brewer(palette = "Blues")+
+  theme.t()+
+  ggsave("imagens/ad-regiao.png", width = 158, height = 93, units = "mm")
 
