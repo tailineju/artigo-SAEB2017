@@ -89,7 +89,7 @@ ordem_comp <- c("Não tem","Sim, um","Sim, dois","Sim, três ou mais")
 ggplot(computador_Todos, aes(x=factor(COMPUTADOR,levels = ordem_comp), y=NOTA_MT)) +
   geom_boxplot(fill=c("#7AA3CC"), width = 0.5) +
   stat_summary(fun="mean", geom="point", shape=23, size=3, fill="white")+
-  labs(x="Disponibilidade de Computador", y="Nota de Matemática") +
+  labs(x="Tem computador em casa?", y="Nota de Matemática") +
   theme.t()+
   ggsave("imagens/mt-comp.png", width = 158, height = 93, units = "mm")
 
