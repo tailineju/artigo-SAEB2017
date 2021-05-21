@@ -102,7 +102,7 @@ dimnames(M) <- list(afazeres = c("A","B", "C","D","E"),
 M
 (R<-chisq.test(M))
 
-#Tabela de contingência dos valores esperados ----
+#Tabela de contingência dos valores esperados
 ME = rbind(R$expected, 
            total=apply(R$expected,2,sum))
 ME
@@ -124,6 +124,7 @@ regioes$AFAZERES_DOM <- regioes$AFAZERES_DOM%>%
 ordem_ad <- c("Menos de 1 hora", "Entre 1 e 2 horas", "Mais de 2 horas", "Mais de 3 horas", "Não faz")
 
 #Análise gráfica ----
+
 ggplot(data=regioes,aes(x=factor(AFAZERES_DOM,levels = ordem_ad), y=Fi,fill=REGIAO)) + 
   geom_bar(stat="identity",position="stack")+
   labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa")+

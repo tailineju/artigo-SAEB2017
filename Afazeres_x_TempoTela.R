@@ -1,6 +1,23 @@
-library(tidyverse)
-#library(sqldf)
-library(dplyr)
+#Carregando pacotes ----
+
+if (!require(pacman)) {
+  install.package("pacman")
+  library(pacman)}
+
+pacman::p_load(tidyverse,dplyr,RColorBrewer)
+
+theme.t <- function(position_legend = "top"){
+  return(list(
+    theme_bw(),
+    theme(axis.title.y=element_text(colour="black", size=12),
+          axis.title.x = element_text(colour="black", size=12),
+          axis.text = element_text(colour = "black", size=9.5),
+          panel.border = element_blank(),
+          axis.line = element_line(colour = "black")),
+    theme(legend.position=position_legend)))}
+
+
+#Dados ----
 
 set.seed(123)
 df <- read_csv(
@@ -20,12 +37,11 @@ df <- read_csv(
 
 amostra <- sample_n(df, 200)
 
-
-
-
 amostra <- amostra %>% 
   filter(!is.na(AFAZERES_DOM)) %>%
   filter(!is.na(USO_TEMPO_TELAS))
+
+#Categorização ----
 
 A <- amostra %>%
   group_by(AFAZERES_DOM, USO_TEMPO_TELAS) %>%
@@ -64,6 +80,7 @@ E <- amostra %>%
 total <- sum(E$Ni)
 E <- E %>%  mutate(Fi = round((Ni/total)*100,4))
 
+#Teste de independência ----
 
 M <- as.table(rbind(A$Ni, B$Ni, C$Ni, D$Ni, E$Ni))
 dimnames(M) <- list(afazeres = c("A", "B","C", "D","E"),
@@ -86,5 +103,5 @@ ggplot(data=tempotela,aes(x=AFAZERES_DOM, y=Fi,fill=USO_TEMPO_TELAS)) +
   labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa")+
   scale_fill_brewer(palette="Blues")+
   theme.t()+
-  ggsave("imagens/ad-regiao.png", width = 158, height = 93, units = "mm")
+  ggsave("imagens/ad-tela.png", width = 158, height = 93, units = "mm")
 

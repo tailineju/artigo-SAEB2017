@@ -1,10 +1,25 @@
-library(tidyverse)
-#library(sqldf)
-library(dplyr)
+#Carregando pacotes ----
+
+if (!require(pacman)) {
+  install.package("pacman")
+  library(pacman)}
+
+pacman::p_load(tidyverse,dplyr,RColorBrewer)
+
+theme.t <- function(position_legend = "top"){
+  return(list(
+    theme_bw(),
+    theme(axis.title.y=element_text(colour="black", size=12),
+          axis.title.x = element_text(colour="black", size=12),
+          axis.text = element_text(colour = "black", size=9.5),
+          panel.border = element_blank(),
+          axis.line = element_line(colour = "black")),
+    theme(legend.position=position_legend)))}
+
+#Dados ----
 
 set.seed(123)
-df <- read_csv(
-  "C:\\Users\\SONY\\Desktop\\unb\\TrabalhoFinal\\amostra_180111558.csv",
+df <- read_csv("amostra_180111558.csv",
   col_names = TRUE,
   col_types = NULL,
   locale = default_locale(),
@@ -20,12 +35,15 @@ df <- read_csv(
 
 amostra <- sample_n(df, 200)
 
+
+#Limpeza dos dados ----
+
 amostra$AFAZERES_DOM <- amostra$AFAZERES_DOM%>%
   str_replace("^A$", "Menos de 1 hora")%>%
   str_replace("^B$", "Entre 1 e 2 horas")%>%
   str_replace("^C$", "Mais de 2 horas")%>%
   str_replace("^D$", "Mais de 3 horas")%>%
-  str_replace("^E$", "Não faz")
+  str_replace("^E$", "N?o faz")
 
 amostra$SEXO <- amostra$SEXO%>%
   str_replace("A", "Masculino")%>%
@@ -36,6 +54,7 @@ amostra <- amostra %>%
   filter(!is.na(AFAZERES_DOM)) %>%
   filter(!is.na(SEXO))
 
+#Categoriza??o ----
 
 fem <- amostra %>%
   group_by(AFAZERES_DOM, SEXO) %>%
@@ -49,6 +68,8 @@ masc <- amostra %>%
   summarise(Ni= n())%>%
   na.omit()
 
+
+#Teste de independ?ncia ----
 # https://rpubs.com/EstatBasica/Cap14
 M <- as.table(rbind(fem$Ni, masc$Ni))
 dimnames(M) <- list(sexo = c("F", "M"),afazeres = c("A","B", "C","D","E"))
@@ -71,12 +92,14 @@ ME
 #https://www.youtube.com/watch?v=MixF1KzoJao
 #https://www.youtube.com/watch?v=tR60jzlGKHg
 
-ordem_ad <- c("Menos de 1 hora", "Entre 1 e 2 horas", "Mais de 2 horas", "Mais de 3 horas", "Não faz")
+#An?lise gr?fica ----
+
+ordem_ad <- c("Menos de 1 hora", "Entre 1 e 2 horas", "Mais de 2 horas", "Mais de 3 horas", "N?o faz")
 
 ggplot(data=amostra) + 
   geom_bar(mapping=aes(x=factor(AFAZERES_DOM,levels = ordem_ad), fill=SEXO),
            position="dodge")+
-  labs(x="Afazeres domésticos por sexo", y="Frequência absoluta") +
+  labs(x="Afazeres dom?sticos por sexo", y="Frequ?ncia absoluta") +
   scale_fill_brewer(palette="Paired")+
   theme.t()+
   ggsave("imagens/ad-sexo.png", width = 158, height = 93, units = "mm")
