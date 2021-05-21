@@ -71,21 +71,20 @@ dimnames(M) <- list(afazeres = c("A", "B","C", "D","E"),
 M
 (R <-chisq.test(M))
 
-# tabela de contingência dos valores esperados
+# tabela de conting?ncia dos valores esperados
 ME = rbind(R$expected, 
            total=apply(R$expected,2,sum))
 ME
 
-#conclusão que há independência entre afazeres domésticos e tempo de tela
-# não há associação entre entre afazeres domésticos e tempo de tela
+#conclus?o que h? independ?ncia entre afazeres dom?sticos e tempo de tela
+# n?o h? associa??o entre entre afazeres dom?sticos e tempo de tela
 
 tempotela <- rbind(A, B, C, D, E)
 
 ggplot(data=tempotela,aes(x=AFAZERES_DOM, y=Fi,fill=USO_TEMPO_TELAS)) + 
-  geom_bar(
-    stat="identity",position="stack"
-    #    position="dodge"
-  )+
-  labs(x="Afazeres domésticos por tempo de tela", y="Fi") +
-  theme_bw()
+  geom_bar(stat="identity",position="stack")+
+  labs(x="Tempo gasto em afazeres domÃ©sticos", y="FrequÃªncia relativa")+
+  scale_fill_brewer(palette="Blues")+
+  theme.t()+
+  ggsave("imagens/ad-regiao.png", width = 158, height = 93, units = "mm")
 

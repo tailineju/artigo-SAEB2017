@@ -103,11 +103,13 @@ regioes$AFAZERES_DOM <- regioes$AFAZERES_DOM%>%
   str_replace("^C$", "Mais de 2 horas")%>%
   str_replace("^D$", "Mais de 3 horas")%>%
   str_replace("^E$", "Não faz")
+
+ordem_ad <- c("Menos de 1 hora", "Entre 1 e 2 horas", "Mais de 2 horas", "Mais de 3 horas", "Não faz")
   
-ggplot(data=regioes,aes(x=AFAZERES_DOM, y=Fi,fill=REGIAO)) + 
+ggplot(data=regioes,aes(x=factor(AFAZERES_DOM,levels = ordem_ad), y=Fi,fill=REGIAO)) + 
   geom_bar(stat="identity",position="stack")+
   labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa")+
-  scale_fill_brewer(palette = "Blues")+
+  scale_fill_brewer(palette="Blues")+
   theme.t()+
   ggsave("imagens/ad-regiao.png", width = 158, height = 93, units = "mm")
 
