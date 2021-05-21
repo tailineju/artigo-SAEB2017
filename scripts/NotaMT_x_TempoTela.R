@@ -18,7 +18,7 @@ theme.t <- function(position_legend = "top"){
 
 #Dados ----
 set.seed(123)
-df <- read_csv("amostra_180111558.csv",
+df <- read_csv("amostra.csv",
   col_names = TRUE,
   col_types = NULL,
   locale = default_locale(),
@@ -91,7 +91,7 @@ tempotela_Todos$USO_TEMPO_TELAS %<>%
   str_replace("^D$", "Mais de 3h")%>% 
   str_replace("^E$", "Menos de 1h ou não vê")
 
-ordem_telas <- rev(c("Menos de 1h ou não vê","Entre 1h e 2h","Mais de 2h","Mais de 3h"))
+ordem_telas <- c("Menos de 1h ou não vê","Entre 1h e 2h","Mais de 2h","Mais de 3h")
 
 #Análise gráfica ----
 ggplot(tempotela_Todos, aes(x=factor(USO_TEMPO_TELAS,levels = ordem_telas), y=NOTA_MT)) +
@@ -99,7 +99,7 @@ ggplot(tempotela_Todos, aes(x=factor(USO_TEMPO_TELAS,levels = ordem_telas), y=NO
   stat_summary(fun="mean", geom="point", shape=23, size=3, fill="white")+
   labs(x="Tempo de uso de telas", y="Nota de Matemática") +
   theme.t()+
-  coord_flip()+
+  #coord_flip()+
   ggsave("imagens/mt-telas.png", width = 158, height = 93, units = "mm")
 
 #Testes para normalidade ----

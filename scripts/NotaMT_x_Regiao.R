@@ -18,7 +18,7 @@ theme.t <- function(position_legend = "top"){
 
 #Dados ----
 set.seed(123)
-df <- read_csv("amostra_180111558.csv",
+df <- read_csv("amostra.csv",
   col_names = TRUE,
   col_types = NULL,
   locale = default_locale(),
