@@ -115,19 +115,22 @@ ME
 regioes <- rbind(A, B, C, D, E)
 
 regioes$AFAZERES_DOM <- regioes$AFAZERES_DOM%>%
-  str_replace("^A$", "Menos de 1 hora")%>%
-  str_replace("^B$", "Entre 1 e 2 horas")%>%
-  str_replace("^C$", "Mais de 2 horas")%>%
-  str_replace("^D$", "Mais de 3 horas")%>%
+  str_replace("^A$", "Menos de 1h")%>%
+  str_replace("^B$", "Entre 1h e 2h")%>%
+  str_replace("^C$", "Mais de 2h")%>%
+  str_replace("^D$", "Mais de 3h")%>%
   str_replace("^E$", "Não faz")
 
-ordem_ad <- c("Menos de 1 hora", "Entre 1 e 2 horas", "Mais de 2 horas", "Mais de 3 horas", "Não faz")
+ordem_ad <- c("Menos de 1h", "Entre 1h e 2h", "Mais de 2h", "Mais de 3h", "Não faz")
+ordem_regiao <- c("Norte","Nordeste","Sudeste","Sul","Centro-Oeste")
+
 
 #Análise gráfica ----
 
-ggplot(data=regioes,aes(x=factor(AFAZERES_DOM,levels = ordem_ad), y=Fi,fill=REGIAO)) + 
+ggplot(data=regioes,aes(x=factor(AFAZERES_DOM,levels = ordem_ad), y=Fi,
+                        fill=factor(REGIAO,levels = ordem_regiao))) + 
   geom_bar(stat="identity",position="stack")+
-  labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa")+
+  labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa",fill="Região")+
   scale_fill_brewer(palette="Blues")+
   theme.t()+
   ggsave("imagens/ad-regiao.png", width = 158, height = 93, units = "mm")

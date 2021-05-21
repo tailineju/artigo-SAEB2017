@@ -16,12 +16,9 @@ theme.t <- function(position_legend = "top"){
           axis.line = element_line(colour = "black")),
     theme(legend.position=position_legend)))}
 
-
 #Dados ----
-
 set.seed(123)
-df <- read_csv(
-  "C:\\Users\\SONY\\Desktop\\unb\\TrabalhoFinal\\amostra_180111558.csv",
+df <- read_csv("amostra_180111558.csv",
   col_names = TRUE,
   col_types = NULL,
   locale = default_locale(),
@@ -42,7 +39,6 @@ amostra <- amostra %>%
   filter(!is.na(USO_TEMPO_TELAS))
 
 #Categorização ----
-
 A <- amostra %>%
   group_by(AFAZERES_DOM, USO_TEMPO_TELAS) %>%
   filter(AFAZERES_DOM=="A")%>%
@@ -88,19 +84,42 @@ dimnames(M) <- list(afazeres = c("A", "B","C", "D","E"),
 M
 (R <-chisq.test(M))
 
-# tabela de conting?ncia dos valores esperados
+#Tabela de contingência ----
 ME = rbind(R$expected, 
            total=apply(R$expected,2,sum))
 ME
 
-#conclus?o que h? independ?ncia entre afazeres dom?sticos e tempo de tela
-# n?o h? associa??o entre entre afazeres dom?sticos e tempo de tela
+# Conclusão que há indepedência entre afazeres domésticos e tempo de tela
+# Não há associação entre entre afazeres domésticos e tempo de tela
 
 tempotela <- rbind(A, B, C, D, E)
 
-ggplot(data=tempotela,aes(x=AFAZERES_DOM, y=Fi,fill=USO_TEMPO_TELAS)) + 
+#Limpeza dos dados ----
+
+tempotela$USO_TEMPO_TELAS %<>%
+  str_replace("^A$", "Menos de 1h/não vê")%>% 
+  str_replace("^B$", "Entre 1h e 2h")%>% 
+  str_replace("^C$", "Mais de 2h")%>% 
+  str_replace("^D$", "Mais de 3h")%>% 
+  str_replace("^E$", "Menos de 1h/não vê")
+
+tempotela$AFAZERES_DOM <- tempotela$AFAZERES_DOM%>%
+  str_replace("^A$", "Menos de 1h")%>%
+  str_replace("^B$", "Entre 1h e 2h")%>%
+  str_replace("^C$", "Mais de 2h")%>%
+  str_replace("^D$", "Mais de 3h")%>%
+  str_replace("^E$", "Não faz")
+
+ordem_ad <- c("Menos de 1h", "Entre 1h e 2h", "Mais de 2h", "Mais de 3h", "Não faz")
+ordem_telas <- rev(c("Menos de 1h/não vê","Entre 1h e 2h","Mais de 2h","Mais de 3h"))
+
+
+#Análise gráfica ----
+
+ggplot(data=tempotela,aes(x=factor(AFAZERES_DOM,levels = ordem_ad), y=Fi,
+                          fill=factor(USO_TEMPO_TELAS,levels = ordem_telas))) + 
   geom_bar(stat="identity",position="stack")+
-  labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa")+
+  labs(x="Tempo gasto em afazeres domésticos", y="Frequência relativa", fill="Tempo de telas")+
   scale_fill_brewer(palette="Blues")+
   theme.t()+
   ggsave("imagens/ad-tela.png", width = 158, height = 93, units = "mm")
