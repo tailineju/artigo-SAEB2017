@@ -1,16 +1,38 @@
 # Resultados do SAEB (ANEB - Prova Brasil) 2017
-> **ANÁLISE DE DADOS**: O impacto do uso de tecnologias e dos afazeres domésticos em estudantes do Ensino Fundamental brasileiro.
+> **ANÁLISE DE DADOS**: O impacto do uso de tecnologias e dos afazeres domésticos em estudantes do 5º ano do Ensino Fundamental.
+
 
 ## **Breve descrição do tema:**
-Estudar o desempenho dos alunos em matemática de acordo com o uso de tecnologias e estudar sobre a distribuição de afazeres domésticos buscando entender o efeito do sexo do estudante. Tendo como objetivos específicos:
-- Avaliar NOTA_MT tendo em vista a variável COMPUTADOR, de acordo com a REGIAO e o USO_TEMPO_TELAS.
-- Avaliar AFAZERES_DOM tendo em vista a variável SEXO, de acordo com a REGIAO e o USO_TEMPO_TELAS.
+Estudar tanto sobre o impacto do uso de computadores, televisões e videogames nas notas em Matemática quanto sobre as desigualdades de gênero e a cultura regional na distribuição de afazeres domésticos aos estudantes do 5º do Ensino Fundamental.
 
-## **Arquivos:**
+## **Hipóteses:**
+
+- A disponibilidade de computador causa impacto nas notas em Matemática dos estudantes; 
+- O tempo gasto em uso de telas interfere nas notas em Matemática dos estudantes;
+- As notas em Matemática variam de acordo com a região que estudante vive; 
+- O tempo gasto em  afazeres domésticos está associada ao sexo do estudante;
+- A região que o estudante vive interfere no tempo gasto em afazeres domésticos;
+- O tempo gasto em afazeres domésticos está associada ao tempo gasto usando telas.
+
+
+## **Diretórios:**
 
 | ARQUIVO        | DESCRIÇÃO |
 |----------------|-----------|
-|`arquivo.R`     | arquivo   |
+|`imagens`     | Gráficos utilizados no relatório e extras |
+|`scripts`     | Códigos utilizados manipulação dos dados, elaboração dos gráficos e realização dos testes |
+
+## **Códigos:**
+
+| ARQUIVO        | VARIÁVEL DE INTERESSE | VARIÁVEL EXPLICATIVA |
+|----------------|-----------|-----------|
+|`Afazeres_x_Regiao.R`     | Afazeres Domésticos   | Região|
+|`Afazeres_x_Sexo.R`     |  Afazeres Domésticos  | Sexo |
+|`Afazeres_x_TempoTela.R`     |   Afazeres Domésticos | Tempo de uso de telas |
+|`NotaMT_x_Computador.R`     |  Nota em Matemática | Computador |
+|`NotaMT_x_Regiao.R`     |  Nota em Matemática  | Região |
+|`NotaMT_x_TempoTela.R`     |  Nota em Matemática  | Tempo de uso de telas |
+
 
 ## **Autores:** 
 
