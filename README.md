@@ -21,6 +21,7 @@ Estudar tanto sobre o impacto do uso de computadores, televisões e videogames n
 |----------------|-----------|
 |`imagens`     | Gráficos utilizados no relatório e extras |
 |`scripts`     | Códigos utilizados manipulação dos dados, elaboração dos gráficos e realização dos testes |
+|`Artigo final`| Artigo completo com gráficos, análises e referências |
 
 ## **Códigos:**
 
