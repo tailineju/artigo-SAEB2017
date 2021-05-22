@@ -15,13 +15,14 @@ Estudar tanto sobre o impacto do uso de computadores, televisões e videogames n
 - O tempo gasto em afazeres domésticos está associada ao tempo gasto usando telas.
 
 
-## **Diretórios:**
+## **Organização:**
 
 | ARQUIVO        | DESCRIÇÃO |
 |----------------|-----------|
 |`imagens`     | Gráficos utilizados no relatório e extras |
 |`scripts`     | Códigos utilizados manipulação dos dados, elaboração dos gráficos e realização dos testes |
-|`Artigo final`| Artigo completo com gráficos, análises e referências |
+|`amostra.csv`| Amostra de tamanho 2000 dos dados do SAEB 2017 |
+|`Artigo final.pdf`| Artigo completo com métodos, resultados, conclusões e referências |
 
 ## **Códigos:**
 
